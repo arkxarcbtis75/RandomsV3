@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "https://superheroapi.com",
+    "secure": true,
+    "changeOrigin": true
+  },
+  "/cdn": {
+    "target": "https://superherodb.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/cdn": ""
+    }
+  }
+}

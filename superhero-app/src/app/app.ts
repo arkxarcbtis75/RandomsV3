@@ -1,12 +1,33 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
+import { SuperheroService } from './services/superhero';
+import { SafeImageUrlPipe } from './pipes/safe-image-url-pipe'; // Importante
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, SafeImageUrlPipe], // Agregado aquí
+  templateUrl: './app.html'
 })
-export class App {
-  protected readonly title = signal('superhero-app');
+export class AppComponent {
+  private superheroService = inject(SuperheroService);
+
+  nombreBusqueda: string = '';
+  listaDeHeroes: any[] = [];
+
+  realizarBusqueda() {
+    console.log('¡Buscando a:', this.nombreBusqueda);
+
+    if (this.nombreBusqueda.trim() !== '') {
+      this.superheroService.buscarHeroe(this.nombreBusqueda).subscribe((respuesta: any) => {
+        if (respuesta.results) {
+          this.listaDeHeroes = respuesta.results;
+        } else {
+          this.listaDeHeroes = [];
+          alert('¡Héroe no encontrado!');
+        }
+      });
+    }
+  }
 }
