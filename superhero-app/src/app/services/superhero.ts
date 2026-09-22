@@ -15,12 +15,10 @@ export class SuperheroService {
       map((heroes) => {
         const termino = nombre.toLowerCase().trim();
         
-        // Filtramos héroes que contengan la búsqueda en su nombre
         const filtrados = heroes.filter(h => 
           h.name.toLowerCase().includes(termino)
         );
 
-        // Mapeamos los datos para mantener la estructura que usas en tu app.html
         const resultados = filtrados.map(heroe => ({
           id: heroe.id,
           name: heroe.name,

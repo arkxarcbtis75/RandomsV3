@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { SuperheroService } from './services/superhero';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,14 @@ export class AppComponent {
           this.listaDeHeroes = respuesta.results;
         } else {
           this.listaDeHeroes = [];
-          alert('¡Héroe no encontrado!');
+          
+          Swal.fire({
+            icon: 'error',
+            title: '¡Héroe no encontrado!',
+            text: `No se encontraron resultados para "${this.nombreBusqueda}". Intenta con otro nombre en inglés.`,
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'Aceptar'
+          });
         }
       });
     }
