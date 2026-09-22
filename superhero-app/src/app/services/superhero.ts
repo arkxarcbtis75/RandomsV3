@@ -1,37 +1,39 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, switchMap, forkJoin, of, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuperheroService {
   private http = inject(HttpClient);
-  private miToken = 'a0aa1d8592eab251c98a781d9b3ddaad';
+  private apiUrl = 'https://akabab.github.io/superhero-api/api/all.json';
 
   buscarHeroe(nombre: string): Observable<any> {
-    return this.http.get(`/api/${this.miToken}/search/${nombre}`);
-  }
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map((heroes) => {
+        const termino = nombre.toLowerCase().trim();
+        
+        // Filtramos héroes que contengan la búsqueda en su nombre
+        const filtrados = heroes.filter(h => 
+          h.name.toLowerCase().includes(termino)
+        );
 
-  // Descarga la imagen vía HTTP y la convierte a Base64 local
-  obtenerImagenBase64(urlImagen: string): Observable<string> {
-    if (!urlImagen) return of('https://dummyimage.com/200x250/cccccc/000000.png&text=Sin+Imagen');
-    
-    // Usamos el proxy local de /api o la URL directa
-    return this.http.get(urlImagen, { responseType: 'blob' }).pipe(
-      switchMap(blob => new Observable<string>(observer => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          observer.next(reader.result as string);
-          observer.complete();
-        };
-        reader.onerror = () => {
-          observer.next('https://dummyimage.com/200x250/cccccc/000000.png&text=Sin+Imagen');
-          observer.complete();
-        };
-        reader.readAsDataURL(blob);
-      })),
-      catchError(() => of('https://dummyimage.com/200x250/cccccc/000000.png&text=Sin+Imagen'))
+        // Mapeamos los datos para mantener la estructura que usas en tu app.html
+        const resultados = filtrados.map(heroe => ({
+          id: heroe.id,
+          name: heroe.name,
+          image: {
+            url: heroe.images.md || heroe.images.sm
+          },
+          biography: {
+            alignment: heroe.biography.alignment || 'good'
+          }
+        }));
+
+        return { results: resultados };
+      })
     );
   }
 }

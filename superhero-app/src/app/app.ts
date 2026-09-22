@@ -2,12 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { SuperheroService } from './services/superhero';
-import { SafeImageUrlPipe } from './pipes/safe-image-url-pipe'; // Importante
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, SafeImageUrlPipe], // Agregado aquí
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html'
 })
 export class AppComponent {
@@ -17,11 +16,9 @@ export class AppComponent {
   listaDeHeroes: any[] = [];
 
   realizarBusqueda() {
-    console.log('¡Buscando a:', this.nombreBusqueda);
-
     if (this.nombreBusqueda.trim() !== '') {
       this.superheroService.buscarHeroe(this.nombreBusqueda).subscribe((respuesta: any) => {
-        if (respuesta.results) {
+        if (respuesta.results && respuesta.results.length > 0) {
           this.listaDeHeroes = respuesta.results;
         } else {
           this.listaDeHeroes = [];
