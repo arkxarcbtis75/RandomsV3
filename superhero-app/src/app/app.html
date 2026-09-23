@@ -1,4 +1,3 @@
-<!-- app.html -->
 <div class="container py-4">
   <div class="text-center mb-4">
     <h1 class="fw-bold text-primary display-5">Buscador de Superhéroes</h1>
@@ -45,15 +44,12 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
     @for (heroe of listaDeHeroes; track heroe.id) {
       <div class="col">
-        <div
-          class="card h-100 shadow border-0 overflow-hidden cursor-pointer"
-          (click)="verDetalles(heroe)"
-        >
+        <div class="card h-100 shadow border-0 overflow-hidden" (click)="verDetalles(heroe)">
           <img
             [src]="heroe.images?.md || heroe.images?.sm"
             [alt]="heroe.name"
-            class="card-img-top"
-            style="height: 280px; object-fit: cover"
+            class="card-img-top object-fit-cover"
+            height="280"
           />
           <div class="card-body text-center d-flex flex-column justify-content-between">
             <h5 class="card-title fw-bold text-dark mb-3">{{ heroe.name }}</h5>
