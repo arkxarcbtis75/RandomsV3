@@ -31,4 +31,23 @@ export class SuperheroService {
       map(heroes => heroes.filter(h => h.biography.aliases?.some((a: string) => a.toLowerCase().includes(alias.toLowerCase().trim()))))
     );
   }
+
+  filtrarPorBando(bando: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.biography.alignment === bando))
+    );
+  }
+
+  filtrarPorEditorial(editorial: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.biography.publisher?.toLowerCase().includes(editorial.toLowerCase().trim())))
+    );
+  }
+
+  filtrarPorGenero(genero: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.appearance.gender?.toLowerCase() === genero.toLowerCase()))
+    );
+  }
 }
+
