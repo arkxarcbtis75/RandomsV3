@@ -66,7 +66,8 @@ export class AppComponent {
           <p><strong>Bando:</strong> ${heroe.biography?.alignment === 'good' ? 'Bueno' : heroe.biography?.alignment === 'bad' ? 'Malo' : 'Neutral'}</p>
           <p><strong>Editorial:</strong> ${heroe.biography?.publisher || 'N/A'}</p>
           <p><strong>Lugar de Nacimiento:</strong> ${heroe.biography?.placeOfBirth || 'Desconocido'}</p>
-          <p><strong>Raza / Género:</strong> ${heroe.appearance?.race || 'N/A'} / ${heroe.appearance?.gender || 'N/A'}</p>
+          <p><strong>Raza:</strong> ${heroe.appearance?.race || 'N/A'}</p>
+          <p> <strong> Genero:</strong>${heroe.appearance?.gender || 'N/A'}</p>
           <p><strong>Base:</strong> ${heroe.work?.base || 'Desconocida'}</p>
           <p><strong>Equipos:</strong> ${heroe.connections?.groupAffiliation || 'Ninguno'}</p>
           <hr>
