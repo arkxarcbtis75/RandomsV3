@@ -32,6 +32,8 @@ export class AppComponent {
       case 'genero': peticion$ = this.superheroService.buscarPorGenero(this.valorBusqueda); break;
       case 'raza': peticion$ = this.superheroService.buscarPorRaza(this.valorBusqueda); break;
       case 'equipo': peticion$ = this.superheroService.buscarPorEquipo(this.valorBusqueda); break;
+      case 'base': peticion$ = this.superheroService.buscarPorBase(this.valorBusqueda); break;
+      case 'nacimiento': peticion$ = this.superheroService.buscarPorLugarNacimiento(this.valorBusqueda); break;
       default: peticion$ = this.superheroService.buscarPorNombre(this.valorBusqueda);
     }
 

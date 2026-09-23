@@ -70,4 +70,16 @@ export class SuperheroService {
       map(heroes => heroes.filter(h => h.connections?.groupAffiliation?.toLowerCase().includes(term)))
     );
   }
+
+  buscarPorBase(base: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.work.base?.toLowerCase().includes(base.toLowerCase().trim())))
+    );
+  }
+
+  buscarPorLugarNacimiento(lugar: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.biography.placeOfBirth?.toLowerCase().includes(lugar.toLowerCase().trim())))
+    );
+  }
 }
