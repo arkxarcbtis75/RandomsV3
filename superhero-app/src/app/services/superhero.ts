@@ -10,28 +10,25 @@ export class SuperheroService {
   private http = inject(HttpClient);
   private apiUrl = 'https://akabab.github.io/superhero-api/api/all.json';
 
-  buscarHeroe(nombre: string): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      map((heroes) => {
-        const termino = nombre.toLowerCase().trim();
-        
-        const filtrados = heroes.filter(h => 
-          h.name.toLowerCase().includes(termino)
-        );
+  private obtenerDatos(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 
-        const resultados = filtrados.map(heroe => ({
-          id: heroe.id,
-          name: heroe.name,
-          image: {
-            url: heroe.images.md || heroe.images.sm
-          },
-          biography: {
-            alignment: heroe.biography.alignment || 'good'
-          }
-        }));
+  buscarPorNombre(nombre: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.name.toLowerCase().includes(nombre.toLowerCase().trim())))
+    );
+  }
 
-        return { results: resultados };
-      })
+  buscarPorNombreReal(nombreReal: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.biography.fullName?.toLowerCase().includes(nombreReal.toLowerCase().trim())))
+    );
+  }
+
+  buscarPorAlias(alias: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.biography.aliases?.some((a: string) => a.toLowerCase().includes(alias.toLowerCase().trim()))))
     );
   }
 }

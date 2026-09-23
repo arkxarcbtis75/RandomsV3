@@ -1,21 +1,32 @@
 <div class="container py-4">
   <div class="text-center mb-4">
-    <h1 class="fw-bold text-primary display-5">Buscador de Personaje de comics </h1>
-    <p class="text-muted">Encuentra a cualquier personaje de comic de Superheroes</p>
+    <h1 class="fw-bold text-primary display-5">Buscador de Superhéroes</h1>
+    <p class="text-muted">Selecciona un criterio de búsqueda de los 3 disponibles</p>
   </div>
 
-  <div class="row justify-content-center mb-5">
-    <div class="col-12 col-md-6 d-flex gap-2">
+  <div class="row justify-content-center mb-5 g-2">
+    <div class="col-12 col-md-3">
+      <select class="form-select form-select-lg shadow-sm" [(ngModel)]="criterioBusqueda">
+        <option value="nombre">1. Nombre</option>
+        <option value="nombreReal">2. Nombre Real</option>
+        <option value="alias">3. Alias</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-5">
       <input
         type="text"
         class="form-control form-control-lg shadow-sm"
-        [(ngModel)]="nombreBusqueda"
+        [(ngModel)]="valorBusqueda"
         (keyup.enter)="realizarBusqueda()"
-        placeholder="Escribe un héroe (ej. superman, batman)..."
+        placeholder="Escribe tu término de búsqueda..."
       />
+    </div>
+
+    <div class="col-12 col-md-2">
       <button
         type="button"
-        class="btn btn-primary btn-lg shadow-sm px-4"
+        class="btn btn-primary btn-lg w-100 shadow-sm"
         (click)="realizarBusqueda()"
       >
         Buscar
@@ -26,23 +37,27 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
     @for (heroe of listaDeHeroes; track heroe.id) {
       <div class="col">
-        <div class="card h-100 shadow border-0 overflow-hidden">
+        <div
+          class="card h-100 shadow border-0 overflow-hidden cursor-pointer"
+          (click)="verDetalles(heroe)"
+        >
           <img
-            [src]="heroe.image?.url"
+            [src]="heroe.images.md || heroe.images.sm"
             [alt]="heroe.name"
             class="card-img-top"
             style="height: 280px; object-fit: cover"
           />
           <div class="card-body text-center d-flex flex-column justify-content-between">
-            <h5 class="card-title fw-bold text-dark">{{ heroe.name }}</h5>
+            <h5 class="card-title fw-bold text-dark mb-2">{{ heroe.name }}</h5>
 
             <div>
               <span
-                class="badge"
+                class="badge mb-2"
                 [ngClass]="heroe.biography?.alignment === 'good' ? 'bg-success' : 'bg-danger'"
               >
                 {{ heroe.biography?.alignment === 'good' ? 'Bueno' : 'Malo' }}
               </span>
+              <p class="text-muted small m-0">Ver detalles</p>
             </div>
           </div>
         </div>
