@@ -1,3 +1,4 @@
+// superhero.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,50 +16,58 @@ export class SuperheroService {
   }
 
   buscarPorNombre(nombre: string): Observable<any[]> {
+    const term = nombre.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.name.toLowerCase().includes(nombre.toLowerCase().trim())))
+      map(heroes => heroes.filter(h => h.name?.toLowerCase().includes(term)))
     );
   }
 
   buscarPorNombreReal(nombreReal: string): Observable<any[]> {
+    const term = nombreReal.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.biography.fullName?.toLowerCase().includes(nombreReal.toLowerCase().trim())))
+      map(heroes => heroes.filter(h => h.biography?.fullName?.toLowerCase().includes(term)))
     );
   }
 
   buscarPorAlias(alias: string): Observable<any[]> {
+    const term = alias.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.biography.aliases?.some((a: string) => a.toLowerCase().includes(alias.toLowerCase().trim()))))
+      map(heroes => heroes.filter(h => h.biography?.aliases?.some((a: string) => a.toLowerCase().includes(term))))
     );
   }
 
-  filtrarPorBando(bando: string): Observable<any[]> {
+  buscarPorBando(bando: string): Observable<any[]> {
+    const term = bando.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.biography.alignment === bando))
+      map(heroes => heroes.filter(h => h.biography?.alignment?.toLowerCase().includes(term)))
     );
   }
 
-  filtrarPorEditorial(editorial: string): Observable<any[]> {
+  buscarPorEditorial(editorial: string): Observable<any[]> {
+    const term = editorial.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.biography.publisher?.toLowerCase().includes(editorial.toLowerCase().trim())))
+      map(heroes => heroes.filter(h => h.biography?.publisher?.toLowerCase().includes(term)))
     );
   }
 
-  filtrarPorGenero(genero: string): Observable<any[]> {
+  buscarPorGenero(genero: string): Observable<any[]> {
+    const term = genero.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.appearance.gender?.toLowerCase() === genero.toLowerCase()))
+      map(heroes => heroes.filter(h => h.appearance?.gender?.toLowerCase().includes(term)))
     );
   }
+
   buscarPorRaza(raza: string): Observable<any[]> {
+    const term = raza.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.appearance.race?.toLowerCase().includes(raza.toLowerCase().trim())))
+      map(heroes => heroes.filter(h => h.appearance?.race?.toLowerCase().includes(term)))
     );
   }
 
   buscarPorEquipo(equipo: string): Observable<any[]> {
+    const term = equipo.toLowerCase().trim();
     return this.obtenerDatos().pipe(
-      map(heroes => heroes.filter(h => h.connections.groupAffiliation?.toLowerCase().includes(equipo.toLowerCase().trim())))
+      map(heroes => heroes.filter(h => h.connections?.groupAffiliation?.toLowerCase().includes(term)))
     );
   }
 }
-
