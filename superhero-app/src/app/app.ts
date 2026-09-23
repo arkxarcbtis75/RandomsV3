@@ -1,21 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { SuperheroService } from './services/superhero';
 import { SafeImageUrlPipe } from './pipes/safe-image-url-pipe'; // Importante
-import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, SafeImageUrlPipe], // Agregado aquí
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html'
 })
 export class AppComponent {
   private superheroService = inject(SuperheroService);
 
-  nombreBusqueda: string = '';
+  criterioBusqueda: string = 'nombre';
+  valorBusqueda: string = '';
   listaDeHeroes: any[] = [];
 
   realizarBusqueda() {
@@ -27,12 +26,7 @@ export class AppComponent {
           this.listaDeHeroes = respuesta.results;
         } else {
           this.listaDeHeroes = [];
-         Swal.fire({
-  title: '¡Héroe no encontrado!',
-  text: 'No se encontró ningún héroe con ese nombre.',
-  icon: 'warning',
-  confirmButtonText: 'Aceptar'
-});
+          alert('¡Héroe no encontrado!');
         }
       });
     }
