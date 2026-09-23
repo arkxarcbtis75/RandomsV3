@@ -1,60 +1,77 @@
-<div style="text-align: center; font-family: Arial, sans-serif; padding: 20px">
-  <h1>¡Buscador de Superhéroes 🦸‍♂️</h1>
+<div class="container py-4 text-center">
 
-  <input
-    [(ngModel)]="nombreBusqueda"
-    (keyup.enter)="realizarBusqueda()"
-    placeholder="Escribe un héroe (en inglés)..."
-    style="padding: 10px; width: 250px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc"
-  />
+  <!-- Título -->
+  <h1 class="mb-4">
+    ¡Buscador de Superhéroes 🦸‍♂️
+  </h1>
 
-  <button
-    type="button"
-    (click)="realizarBusqueda()"
-    style="
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-left: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    "
-  >
-    Buscar
-  </button>
+  <!-- Buscador -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-12 col-md-8 col-lg-6">
 
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 30px; gap: 20px">
-    @for (heroe of listaDeHeroes; track heroe.id) {
-      <div
-        style="
-          border: 1px solid #2d0b8a;
-          padding: 15px;
-          border-radius: 8px;
-          width: 200px;
-          box-shadow: 2px 2px 10px rgba(13, 5, 121, 0.3);
-          background-color: #ffffff;
-        "
-      >
-        <h3 style="margin-bottom: 10px; font-size: 18px; color: #111">{{ heroe.name }}</h3>
-
-        <img
-          [src]="heroe.image?.url | safeImageUrl | async"
-          [alt]="heroe.name"
-          style="
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 5px;
-            background-color: #eee;
-          "
+      <div class="input-group">
+        <input
+          [(ngModel)]="nombreBusqueda"
+          (keyup.enter)="realizarBusqueda()"
+          type="text"
+          class="form-control"
+          placeholder="Escribe un héroe (en inglés)..."
         />
 
-        <p style="font-size: 14px; color: #333; margin-top: 10px; font-weight: bold">
-          Bando: {{ heroe.biography?.alignment === 'good' ? '😇 Bueno' : '😈 Malo' }}
-        </p>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="realizarBusqueda()"
+        >
+          Buscar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lista de superhéroes -->
+  <div class="row g-4 justify-content-center">
+
+    @for (heroe of listaDeHeroes; track heroe.id) {
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+        <!-- Tarjeta -->
+        <div class="card h-100 shadow">
+
+          <!-- Imagen -->
+          <div class="ratio ratio-4x3">
+            <img
+  [src]="heroe.image?.url"
+  [alt]="heroe.name"
+  class="card-img-top img-fluid"
+  alt="Imagen del superhéroe"
+/>
+          </div>
+
+          <!-- Información -->
+          <div class="card-body text-center">
+
+            <h3 class="card-title fs-5">
+              {{ heroe.name }}
+            </h3>
+
+            <p class="card-text fw-bold">
+              Bando:
+              {{ heroe.biography?.alignment === 'good'
+                ? '😇 Bueno'
+                : '😈 Malo'
+              }}
+            </p>
+
+          </div>
+
+        </div>
+
       </div>
     }
+
   </div>
+
 </div>

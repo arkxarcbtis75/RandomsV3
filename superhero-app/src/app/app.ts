@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { SuperheroService } from './services/superhero';
 import { SafeImageUrlPipe } from './pipes/safe-image-url-pipe'; // Importante
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,12 @@ export class AppComponent {
           this.listaDeHeroes = respuesta.results;
         } else {
           this.listaDeHeroes = [];
-          alert('¡Héroe no encontrado!');
+         Swal.fire({
+  title: '¡Héroe no encontrado!',
+  text: 'No se encontró ningún héroe con ese nombre.',
+  icon: 'warning',
+  confirmButtonText: 'Aceptar'
+});
         }
       });
     }
