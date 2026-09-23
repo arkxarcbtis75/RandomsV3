@@ -49,5 +49,16 @@ export class SuperheroService {
       map(heroes => heroes.filter(h => h.appearance.gender?.toLowerCase() === genero.toLowerCase()))
     );
   }
+  buscarPorRaza(raza: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.appearance.race?.toLowerCase().includes(raza.toLowerCase().trim())))
+    );
+  }
+
+  buscarPorEquipo(equipo: string): Observable<any[]> {
+    return this.obtenerDatos().pipe(
+      map(heroes => heroes.filter(h => h.connections.groupAffiliation?.toLowerCase().includes(equipo.toLowerCase().trim())))
+    );
+  }
 }
 
